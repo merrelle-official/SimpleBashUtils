@@ -21,12 +21,12 @@ int main(int argc, char *argv[]) {
     
     opt options = {0};
     parser(argc,argv,&options);
-    printf("b: %d\n", options.b);
-    printf("e: %d\n", options.e);
-    printf("n: %d\n", options.n);
-    printf("s: %d\n", options.s);
-    printf("t: %d\n", options.t);
-    printf("v: %d\n________________________________\n\n", options.v);
+    // printf("b: %d\n", options.b);
+    // printf("e: %d\n", options.e);
+    // printf("n: %d\n", options.n);
+    // printf("s: %d\n", options.s);
+    // printf("t: %d\n", options.t);
+    // printf("v: %d\n________________________________\n\n", options.v);
     output(argv,&options);
     return 0;
 }
@@ -90,12 +90,23 @@ void output(char *argv[], opt * options){
             if (options -> b && !(options -> n)){
                 if (current != '\n'){
                     if (counter == 0){
+                        
                         printf("%6d\t", ++str_count);
                         
                         counter = 1;
                     } 
                 }   else {
                         counter = 0;
+ 
+                }
+
+                if(current == '\n' && flag == 1) {
+                    if (options -> v){
+                        printf("^M");
+                    }
+                    if (options -> e){
+                        printf("$");
+                    }
                 }
             } 
 
@@ -107,6 +118,12 @@ void output(char *argv[], opt * options){
                 }
                 if(current == '\n' && flag == 1) {
                     counter = 0;
+                    if (options -> v){
+                        printf("^M");
+                    }
+                    if (options -> e){
+                        printf("$");
+                    }
                 }
 
             }
@@ -117,17 +134,42 @@ void output(char *argv[], opt * options){
                 } else {
                     non_str_count = 0;
                 }
+
                 if (non_str_count < 3){
+                    if (options -> v && current == '\n'){
+                        printf("^M");
+                    }
+                    if (options -> e && current == '\n'){
+                        printf("$");
+                    }
+
+                    if (options -> t && current == '\t'){
+                        printf("^I");
+                    } else {
+                        printf("%c", current);  
+                    }
                     
-                    printf("%c", current);
                 } 
+
                 if (non_str_count < 2){
                     flag = 1;
                 } else {
                     flag = 0;
                 }
+
             } else{
-                printf("%c", current);
+                if (options -> v && current == '\n'){
+                        printf("^M");
+                }
+                if (options -> e && current == '\n'){
+                    printf("$");
+                }
+
+                if (options -> t && current == '\t'){
+                        printf("^I");
+                } else {
+                        printf("%c", current);  
+                }
             }
             
         }

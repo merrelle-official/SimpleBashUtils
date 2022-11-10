@@ -12,7 +12,7 @@ START=./$(EXE_NAME)
 
 all:
 	$(CC) $(EXE_NAME) $(C_NAME)
-	$(START) -b -n -s a.txt
+	$(START) -e a.txt
 
 rebuild:
 	rm -rf $(EXE_NAME)
